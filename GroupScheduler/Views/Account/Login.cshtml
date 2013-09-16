@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "My Group Scheduler - Log In";
+}
+@using BootstrapSupport
+@model GroupScheduler.Models.LoginModel
+
+@using (Html.BeginForm())
+{
+    <fieldset class="form-horizontal">
+        <legend>Log in to My Group Scheduler</legend>
+        @foreach (var property in Model.VisibleProperties())
+        {
+            if (property.Name != "RedirectUrl")
+            {
+                using (Html.ControlGroupFor(property.Name))
+                {
+                    @Html.Label(property.Name.ToSeparatedWords(), new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.Editor(property.Name, new {@class = "input-xlarge"})
+                        @Html.ValidationMessage(property.Name, null, new {@class = "help-inline"})
+                    </div>
+                }
+            }
+        }
+        @Html.HiddenFor(model => model.RedirectUrl)
+		<div class="form-actions">
+            <button type="submit" class="btn btn-primary">Log In</button>
+            @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn-mini" })
+          </div>
+    </fieldset>
+}

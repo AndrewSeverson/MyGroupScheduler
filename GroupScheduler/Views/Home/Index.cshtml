@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "My Group Scheduler";
+}
+@using System.Web.Optimization
+@using GroupScheduler.Classes
+@using GroupScheduler.Infrastructure.Data.Stores
+@model GroupScheduler.Models.HomeModel
+@section head{
+    @Styles.Render("~/Bundles/FullcalCss")
+    @Styles.Render("~/Bundles/HomeCss")
+}
+
+@if (Model.CurrentUser != null)
+{
+    <div class="CenterContent">
+        <br/>
+        <div class="btn-group">
+            <button class="btn-primary">View A Group</button>
+            <button class="btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+            </button>
+            <ul id="ViewGroupsDropdown" class="dropdown-menu" role="menu">
+                @foreach (Group g in Model.UserGroups)
+                {
+                    <li><a tabindex="-1" href="@Url.Action("ViewGroup", "Group", new{groupId = g.GroupId})">@g.Name@(g.Description == "" ? "" : " - " + g.Description)</a></li>
+                }
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="@Url.Action("CreateGroup", "Group")">Create A Group</a></li>
+            </ul>
+        </div> 
+        
+        <input id="SearchPublicGroup" type="text" class="span4" placeholder="Search public groups..." autocomplete="off"/>
+        
+    </div>
+}
+
+<div id='HomeCalendar'></div>
+
+@section Scripts{
+    @Scripts.Render("~/Bundles/FulcalJs")
+    @Scripts.Render("~/Bundles/HomeJs")
+}
+

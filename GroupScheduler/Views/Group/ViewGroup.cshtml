@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "My Group Scheduler - View Group";
+}
+@using System.Web.Optimization
+@using GroupScheduler.Infrastructure.Data.Stores
+@model GroupScheduler.Models.ViewGroupModel
+
+@section head
+{
+    @Styles.Render("~/Bundles/FullcalCss")
+    @Styles.Render("~/Bundles/ViewGroupCss")
+}
+<h2 class="CenterContent">@Model.Group.Name</h2>
+<h5 class="CenterContent">@Model.Group.Description</h5>
+@{
+    if (Model.IsAdmin)
+    {
+        <div id="AdminFields">
+            @Html.ActionLink("Add Group Event", "AddGroupEvent", "Group", new{groupId = Model.Group.GroupId}, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Add Group News", "AddGroupNews", "Group", new{groupId = Model.Group.GroupId}, new { @class = "btn btn-info" })
+            @Html.ActionLink("Manage Group Members", "ManageGroupMembers", "Group", new{groupId = Model.Group.GroupId}, new { @class = "btn btn-info" })
+        </div>
+    }
+}
+<table>
+    <tr>
+        <td id="GroupNewsContainer">
+            @{Html.RenderPartial("ViewGroupNews", Model);}
+        </td>
+        <td id="GroupCalendarContainer">
+            @{Html.RenderPartial("ViewGroupCalendar");}
+        </td>
+    </tr>
+</table>
+
+@section Scripts{
+    @Scripts.Render("~/Bundles/FulcalJs")
+    @Scripts.Render("~/Bundles/ViewGroupJs")
+}
+
+

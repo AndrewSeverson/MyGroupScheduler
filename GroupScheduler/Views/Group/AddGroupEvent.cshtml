@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "My Group Scheduler - Add Group Event";
+}
+@using System.Web.Optimization
+@using BootstrapSupport
+@model GroupScheduler.Models.AddGroupEventModel 
+
+@using (Html.BeginForm())
+{
+    <fieldset class="form-horizontal">
+        <legend>Add an event for this group</legend>
+        @foreach (var property in Model.VisibleProperties())
+        {
+            if (property.Name != "GroupId")
+            {
+                using (Html.ControlGroupFor(property.Name))
+                {
+                    @Html.Label(property.Name.ToSeparatedWords(), new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.Editor(property.Name, new {@class = "input-xlarge"})
+                        @Html.ValidationMessage(property.Name, null, new {@class = "help-inline"})
+                    </div>
+                }
+            }
+        }
+        @Html.HiddenFor(model => model.GroupId)
+		<div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            @Html.ActionLink("Back to Group", "ViewGroup", "Group", new{groupId = Model.GroupId}, new { @class = "btn btn-primary" })
+          </div>
+    </fieldset>
+}
+
+@section Scripts{
+    @Scripts.Render("~/Bundles/FulcalJs")
+    @Scripts.Render("~/Bundles/ViewGroupJs")
+}

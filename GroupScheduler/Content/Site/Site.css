@@ -1,0 +1,23 @@
+﻿#headerBarContent{
+    float:right;
+    line-height:20px;
+    color:white;
+}
+#outerContainer{
+  background-color: lightgray;
+  height: auto !important;
+  margin: 0 auto;
+  min-height: 100%;
+}
+
+.CenterContent {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.Hidden {
+    display: none;
+}

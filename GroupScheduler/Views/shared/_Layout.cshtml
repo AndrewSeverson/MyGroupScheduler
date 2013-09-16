@@ -1,0 +1,68 @@
+@using System.Web.Optimization
+@using BootstrapSupport
+@using GroupScheduler.Classes
+@using NavigationRoutes
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>@ViewBag.Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="@Styles.Url("~/Bundles/CoreCss")" rel="stylesheet"/>
+        <script type="text/javascript">
+            var FULL_URL = "@Url.Content("~")";
+        </script>
+        @RenderSection("head", required: false)
+        @* favicons and touch icons go here *@
+    </head>
+    <body>
+        <div id="outerContainer">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="@(Url.Action("Index","Home"))" title="change in Layout.cshtml">My Group Scheduer</a>
+                        <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            @Html.Navigation()
+                        </ul>
+                    </div>
+                        <span id="headerBarContent">
+                            @{
+                                // Check if there is a currently logged in user from the session and give the appropriate icons
+                                User user = this.Session["SchedulerUser"] as User;
+                                if ( user == null || user.Email == null)
+                                {
+                                    @Html.ActionLink("Register", "Register", "Account", null, new {@class = "btn-mini"})
+                                    @Html.ActionLink("Log In", "Login", "Account", null, new {@class = "btn-mini"})
+                                }
+                                else
+                                {
+                                    @:Welcome @user.DisplayName
+                                    @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn-mini"})
+                                }
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="background-color: white">
+                @Html.Partial("_alerts")
+                @Html.Partial("_validationSummary")
+                @RenderBody()   
+                <hr>
+                <footer>
+                    <p>&copy; Author - Andrew JH Severson</p>
+                    <p class="text-right">Last Updated - </p>
+                </footer> 
+            </div>   
+            @Scripts.Render("~/Bundles/CoreJs")
+            @RenderSection("Scripts", required: false)
+        </div>
+    </body>
+</html>
+
