@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "My Group Scheduler - Manage Group Members";
+}
+@using System.Web.Optimization
+@using GroupScheduler.Infrastructure.Data.Stores
+@model GroupScheduler.Models.ManageGroupMembersModel
+
+@section head
+{
+    @Styles.Render("~/Bundles/FullcalCss")
+    @Styles.Render("~/Bundles/ViewGroupCss")
+}
+
+<div class="CenterContent">
+    <h2>@Model.Group.Name</h2>
+    <div class="Hidden" id="HiddenGroupId">@Model.Group.GroupId</div>
+    <br/>
+    
+    <div class="text-right" style="width: 87%;">
+        @Html.ActionLink("Add New Member", "AddNewMember", "Group", new{groupId = Model.Group.GroupId}, new { @class = "btn btn-info" })
+    </div>
+    <br/>
+
+    <table id="GroupMembersTable" class="table table-striped table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th class="Hidden"><!-- HiddenUserId --></th>
+                <th>Display Name</th>
+                <th>Email</th>
+                <th>Membership</th>
+                <th class="@(Model.UserIsOwner ? "" : "Hidden")">Change Role</th>
+                <th class="@(Model.UserIsOwner ? "" : "Hidden")">Remove Member</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GroupMember member in Model.Group.Members)
+            {
+                // determin row color based on permission
+                string rowColor = "success";
+                if (member.IsOwner)
+                {
+                    rowColor = "warning";
+                }
+                else if (member.IsAdmin && !member.IsOwner)
+                {
+                    rowColor = "error";
+                }
+                <tr  class="@(rowColor)">
+                    <td class="Hidden hiddenMemberUserId">@member.UserId</td>
+                    <td>@member.DisplayName</td>
+                    <td>@member.Email</td>
+                    <td class="memberRoleCell">@(member.IsAdmin || member.IsOwner ? "Admin" : "Member")</td>
+                    <td class="@(Model.UserIsOwner ? "" : "Hidden")">
+                        @{
+                            if (member.IsOwner)
+                            {
+                                @: <button type="button" disabled="disabled" class="btn btn-warning">Owner</button>
+                            }
+                            else if (member.IsAdmin)
+                            {
+                                @: <button type="button" class="btn btn-danger DemoteAdmin">Demote to Member</button>
+                            }
+                            else
+                            {
+                                @: <button type="button" class="btn btn-success PromoteMember">Promote to Admin</button>
+                            }
+                        }
+                    </td>
+                    <td class="@(Model.UserIsOwner ? "" : "Hidden")"><button type="button" class="btn btn-danger @(member.IsOwner ? "Hidden" : "RemoveMember")">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Bundles/FulcalJs")
+    @Scripts.Render("~/Bundles/ViewGroupJs")
+}
+
+
+

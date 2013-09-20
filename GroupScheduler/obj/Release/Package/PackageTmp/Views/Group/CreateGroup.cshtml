@@ -1,0 +1,46 @@
+﻿@using BootstrapSupport
+@using GroupScheduler.Models
+@{
+    ViewBag.Title = "My Group Scheduler - Create Group";
+}
+@model CreateGroupModel
+
+@if (Model.User == null || Model.User.Email == null)
+{
+    <fieldset class="form-horizontal">
+        <legend>You must be logged in to create a group. Please log in or register.</legend>
+        
+		<div class="form-actions">
+            @Html.ActionLink("Log In", "Login", "Account", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-primary" })
+          </div>
+    </fieldset>
+}
+else
+{
+    using (Html.BeginForm())
+{
+    <fieldset class="form-horizontal">
+        <legend>Log in to My Group Scheduler</legend>
+        @foreach (var property in Model.VisibleProperties())
+        {
+            if (property.Name != "User")
+            {
+                using (Html.ControlGroupFor(property.Name))
+                {
+                    @Html.Label(property.Name.ToSeparatedWords(), new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.Editor(property.Name, new {@class = "input-xlarge"})
+                        @Html.ValidationMessage(property.Name, null, new {@class = "help-inline"})
+                    </div>
+                }
+            }
+        }
+		<div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Group</button>
+            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn-mini" })
+          </div>
+    </fieldset>
+}
+}
+

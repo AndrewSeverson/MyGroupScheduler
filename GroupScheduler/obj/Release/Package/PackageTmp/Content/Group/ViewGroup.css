@@ -1,0 +1,18 @@
+﻿#GroupNewsContainer {
+    width: 30%;
+    vertical-align: top;
+}
+#GroupCalendarContainer {
+    width: 70%;
+}
+
+#ViewGroupCalendar {
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+#AdminFields {
+    text-align: right;
+    margin-right: 30px;
+}

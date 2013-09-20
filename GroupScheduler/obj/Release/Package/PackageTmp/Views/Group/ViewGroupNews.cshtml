@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+    int newsCount = 0;
+}
+@using GroupScheduler.Infrastructure.Data.Stores
+@model GroupScheduler.Models.ViewGroupModel
+
+<h3 class="CenterContent">News</h3>
+
+
+
+<div class="accordion" id="accordion2">
+    @foreach (GroupNews news in Model.GroupNews)
+    {
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_@(news.Id)">
+                    @news.Subject
+                </a>
+            </div>
+            <div id="collapse_@(news.Id)" class="accordion-body collapse @(newsCount == 0 ? "in" : "")">
+                <div class="accordion-inner">
+                    <label>Posted By: <span class="bold">@news.Poster.DisplayName</span></label>
+                    <label>Date: <span class="bold">@news.PostedDateString</span></label>
+                    @news.Text
+                </div>
+            </div>
+        </div>
+        newsCount++;
+    }
+    @if (Model.GroupNews.Count == 0)
+    {
+        <span>There does not appear to be any news for this group yet</span>
+    }
+</div>

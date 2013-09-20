@@ -1,0 +1,15 @@
+﻿#HomeCalendar {
+    width: 1050px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.UsHolidays, .custom div, .custom span {
+    background-color: lightGrey; /* background color */
+    border-color: black;     /* border color */
+    color: black;           /* text color */
+}
+
+#SearchPublicGroup {
+    margin-left: 20px;
+}
