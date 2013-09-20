@@ -10,7 +10,7 @@ Things that still need implementaion
  * Logger // i know i know
  * Sql injection checks
  * Prevent unlimited login attempts
- * Prevent spamming of and database insert method
+ * Prevent spamming of any database insert method
  * Major Feature - the ability for admins to add/edit events
  * Major Feature - Displaying all events on the calendars
 Once these are completed, the applicatoin will be functional to be published to the site
